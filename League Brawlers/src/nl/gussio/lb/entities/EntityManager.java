@@ -11,9 +11,14 @@ public class EntityManager {
 		entities.add(e);
 	}
 	
-	public void updateEntities(Graphics g){
+	public void updateEntities(){
 		for(Entity e : entities){
 			e.update();
+		}
+	}
+	
+	public void renderEntities(Graphics g){
+		for(Entity e : entities){
 			e.render(g);
 		}
 	}
