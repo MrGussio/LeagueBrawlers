@@ -32,7 +32,8 @@ public class Screen extends JPanel implements Runnable{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		em.updateEntities(g);
+		em.updateEntities();
+		em.renderEntities(g);
 	}
 
 	@Override
