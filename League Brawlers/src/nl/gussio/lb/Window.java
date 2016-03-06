@@ -39,7 +39,17 @@ public class Window extends JFrame implements KeyListener{
 			screen.p.right = true;			
 		}
 		if(e.getKeyCode() == KeyEvent.VK_W){
-			screen.p.jumping = true;
+			if(screen.p.jumping || screen.p.falling){
+				if(screen.p.doubleJumpReady &! screen.p.jumpPressed){
+					screen.p.currentJumpSpeed = screen.p.jumpSpeed;
+					screen.p.doubleJumpReady = false;
+					screen.p.falling = false;
+				}
+			}
+			if(!screen.p.falling){
+				screen.p.jumping = true;
+				screen.p.jumpPressed = true;
+			}
 		}
 	}
 
@@ -51,7 +61,9 @@ public class Window extends JFrame implements KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_D){
 			screen.p.right = false;			
 		}
-		
+		if(e.getKeyCode() == KeyEvent.VK_W){
+			screen.p.jumpPressed = false;
+		}
 	}
 
 	@Override

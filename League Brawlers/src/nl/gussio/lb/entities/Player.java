@@ -9,7 +9,7 @@ import nl.gussio.lb.map.MapObject;
 
 public class Player extends Entity {
 
-	public boolean left,right,jumping, falling = false;
+	public boolean left,right,jumping, jumpPressed, falling = false;
 	
 	public boolean topCollision = false;
 	
