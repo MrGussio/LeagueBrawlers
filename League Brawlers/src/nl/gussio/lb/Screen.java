@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 
 import nl.gussio.lb.entities.EntityManager;
 import nl.gussio.lb.entities.Player;
+import nl.gussio.lb.map.Map;
+import nl.gussio.lb.map.Platform;
 
 public class Screen extends JPanel implements Runnable{
 	
@@ -18,12 +20,15 @@ public class Screen extends JPanel implements Runnable{
 	public int fps = 60;
 	
 	public EntityManager em;
+	public static Map map;
 	public Player p;
 	
 	public Screen(){
 		setBackground(Color.BLACK);
 		em = new EntityManager();
-		p = new Player(0, 0, 24, 36);
+		map = new Map();
+		map.addObject(new Platform(300,400,400,25));
+		p = new Player(400, 0, 24, 36);
 		em.addEntity(p);
 		game = new Thread(this);
 		game.start();	
@@ -34,6 +39,8 @@ public class Screen extends JPanel implements Runnable{
 		super.paintComponent(g);
 		em.updateEntities();
 		em.renderEntities(g);
+		map.updateObjects();
+		map.renderObjects(g);
 	}
 
 	@Override
@@ -47,7 +54,7 @@ public class Screen extends JPanel implements Runnable{
 	
 	public void fps(){
 		try{
-			game.sleep(fps/1000);
+			game.sleep(1000/fps);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
