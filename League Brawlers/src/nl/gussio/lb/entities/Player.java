@@ -1,8 +1,10 @@
 package nl.gussio.lb.entities;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+
+import javax.swing.ImageIcon;
 
 import nl.gussio.lb.Screen;
 import nl.gussio.lb.map.MapObject;
@@ -23,14 +25,22 @@ public class Player extends Entity {
 	
 	public int movementSpeed = 3;
 	
+	public Image img;
+	
+	boolean loaded = false;
+	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
+		img = new ImageIcon("res/Kennen.png").getImage();
+		System.out.println("frozen?");
+		loaded = true;
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.WHITE);
-		g.fillRect(x, y, width, height);
+		if(loaded){
+			g.drawImage(img, x, y, width, height, null);
+		}
 	}
 
 	@Override
