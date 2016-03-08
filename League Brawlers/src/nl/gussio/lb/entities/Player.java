@@ -1,10 +1,12 @@
 package nl.gussio.lb.entities;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 import nl.gussio.lb.Screen;
 import nl.gussio.lb.map.MapObject;
@@ -25,22 +27,16 @@ public class Player extends Entity {
 	
 	public int movementSpeed = 3;
 	
-	public Image img;
-	
-	boolean loaded = false;
+	public BufferedImage img;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		img = new ImageIcon("res/Kennen.png").getImage();
-		System.out.println("frozen?");
-		loaded = true;
+		loadTextures();
 	}
 
 	@Override
 	public void render(Graphics g) {
-		if(loaded){
 			g.drawImage(img, x, y, width, height, null);
-		}
 	}
 
 	@Override
@@ -122,6 +118,14 @@ public class Player extends Entity {
 				break;
 			default:
 				System.err.println("Tried to move "+this.toString()+", but received a integer that cannot be used.");
+		}
+	}
+	
+	public void loadTextures(){
+		try {
+			img = ImageIO.read(new File("res/Kennen.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
