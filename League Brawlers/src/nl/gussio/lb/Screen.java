@@ -28,7 +28,7 @@ public class Screen extends JPanel implements Runnable{
 		em = new EntityManager();
 		map = new Map();
 		map.addObject(new Platform(300,400,400,25));
-		p = new Player(400, 0, 24, 36);
+		p = new Player(400, 0, 48, 72);
 		em.addEntity(p);
 		game = new Thread(this);
 		game.start();	
