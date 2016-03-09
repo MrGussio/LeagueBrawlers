@@ -17,8 +17,8 @@ public class Kennen extends Player{
 	@Override
 	public void loadTextures(){
 		try {
-			img = ImageIO.read(new File("res/Kennen.png"));
-			img_kick = ImageIO.read(new File("res/kennen_kick.png"));
+			img = ImageIO.read(new File("res/kennen/normal.png"));
+			img_kick = ImageIO.read(new File("res/kennen/kick.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
