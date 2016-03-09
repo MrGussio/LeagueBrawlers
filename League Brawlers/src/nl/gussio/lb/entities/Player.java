@@ -11,11 +11,14 @@ import javax.imageio.ImageIO;
 import nl.gussio.lb.Screen;
 import nl.gussio.lb.map.MapObject;
 
-public class Player extends Entity {
+public abstract class Player extends Entity {
 
 	public boolean left,right,jumping, jumpPressed, falling = false;
 	
 	public boolean topCollision = false;
+	
+	public boolean isKicking = false;
+	public int kick = 0;
 	
 	public boolean doubleJumpReady = false;
 	
@@ -28,6 +31,7 @@ public class Player extends Entity {
 	public int movementSpeed = 3;
 	
 	public BufferedImage img;
+	public BufferedImage img_kick;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -36,7 +40,12 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
+
+		if(isKicking){
+			g.drawImage(img_kick, x, y, width+12, height, null);
+		}else{
 			g.drawImage(img, x, y, width, height, null);
+		}
 	}
 
 	@Override
@@ -63,9 +72,18 @@ public class Player extends Entity {
 			y += currentFallSpeed;
 			
 			if(currentFallSpeed < maxFallSpeed){
-				currentFallSpeed += .1;
+				currentFallSpeed += .15;
 			}
 		}
+		
+		if(isKicking){
+			kick--;
+			if(kick <= 0){
+				kick = 0;
+				isKicking = false;
+			}
+		}
+		detectCollision();
 	}
 	
 	public void detectCollision(){
@@ -73,18 +91,6 @@ public class Player extends Entity {
 		int iY = y;
 		
 		for(MapObject o : Screen.map.objects){
-			//left
-			if(collides(new Point(iX - 1, iY + 2), o)
-					|| collides(new Point(iX - 1, iY + height - 1), o)){
-				left = false;
-			}
-			
-			//right
-			if(collides(new Point(iX + width, iY+2), o)
-					|| collides(new Point(iX + width, iY + height-1), o)){
-				right = false;
-			}
-			
 			//top
 			if(collides(new Point(iX + 1, iY), o)
 					|| collides(new Point(iX +width - 1, iY), o)){
@@ -104,6 +110,18 @@ public class Player extends Entity {
 					falling = true;
 				}
 			}
+			
+			//left
+			if(collides(new Point(iX - 1, iY + 2), o)
+					|| collides(new Point(iX - 1, iY + height - 1), o)){
+				left = false;
+			}
+			
+			//right
+			if(collides(new Point(iX + width, iY+2), o)
+					|| collides(new Point(iX + width, iY + height-1), o)){
+				right = false;
+			}
 		}
 		topCollision = false;
 	}
@@ -121,13 +139,14 @@ public class Player extends Entity {
 		}
 	}
 	
-	public void loadTextures(){
-		try {
-			img = ImageIO.read(new File("res/Kennen.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
+	public void kick(){
+		if(!isKicking){
+			kick = 10;
+			isKicking = true;
 		}
 	}
+	
+	public abstract void loadTextures();
 
 	
 }
