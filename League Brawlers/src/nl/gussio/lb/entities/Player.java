@@ -81,18 +81,6 @@ public class Player extends Entity {
 		int iY = y;
 		
 		for(MapObject o : Screen.map.objects){
-			//left
-			if(collides(new Point(iX - 1, iY + 2), o)
-					|| collides(new Point(iX - 1, iY + height - 1), o)){
-				left = false;
-			}
-			
-			//right
-			if(collides(new Point(iX + width, iY+2), o)
-					|| collides(new Point(iX + width, iY + height-1), o)){
-				right = false;
-			}
-			
 			//top
 			if(collides(new Point(iX + 1, iY), o)
 					|| collides(new Point(iX +width - 1, iY), o)){
@@ -111,6 +99,18 @@ public class Player extends Entity {
 				if(!topCollision && !jumping){
 					falling = true;
 				}
+			}
+			
+			//left
+			if(collides(new Point(iX - 1, iY + 2), o)
+					|| collides(new Point(iX - 1, iY + height - 1), o)){
+				left = false;
+			}
+			
+			//right
+			if(collides(new Point(iX + width, iY+2), o)
+					|| collides(new Point(iX + width, iY + height-1), o)){
+				right = false;
 			}
 		}
 		topCollision = false;
