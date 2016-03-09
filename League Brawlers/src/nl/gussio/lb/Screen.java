@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import nl.gussio.lb.entities.EntityManager;
 import nl.gussio.lb.entities.Player;
+import nl.gussio.lb.entities.champions.Kennen;
 import nl.gussio.lb.map.Map;
 import nl.gussio.lb.map.Platform;
 
@@ -28,7 +29,7 @@ public class Screen extends JPanel implements Runnable{
 		em = new EntityManager();
 		map = new Map();
 		map.addObject(new Platform(300,400,400,25));
-		p = new Player(400, 0, 48, 72);
+		p = new Kennen(400, 0, 48, 72);
 		em.addEntity(p);
 		game = new Thread(this);
 		game.start();	
