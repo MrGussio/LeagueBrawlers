@@ -17,6 +17,8 @@ public class Player extends Entity {
 	
 	public boolean topCollision = false;
 	
+	public boolean isKicking = false;
+	
 	public boolean doubleJumpReady = false;
 	
 	public double jumpSpeed = 5;
@@ -27,7 +29,8 @@ public class Player extends Entity {
 	
 	public int movementSpeed = 3;
 	
-	public BufferedImage img;
+	public BufferedImage kennen;
+	public BufferedImage kennen_kick;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -36,7 +39,11 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-			g.drawImage(img, x, y, width, height, null);
+		if(isKicking){
+			g.drawImage(kennen_kick, x, y, width+5, height, null);
+		}else{
+			g.drawImage(kennen, x, y, width, height, null);
+		}
 	}
 
 	@Override
@@ -124,7 +131,8 @@ public class Player extends Entity {
 	
 	public void loadTextures(){
 		try {
-			img = ImageIO.read(new File("res/Kennen.png"));
+			kennen = ImageIO.read(new File("res/Kennen.png"));
+			kennen_kick = ImageIO.read(new File("res/kennen_kick.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
