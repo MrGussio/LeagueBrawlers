@@ -11,13 +11,14 @@ import javax.imageio.ImageIO;
 import nl.gussio.lb.Screen;
 import nl.gussio.lb.map.MapObject;
 
-public class Player extends Entity {
+public abstract class Player extends Entity {
 
 	public boolean left,right,jumping, jumpPressed, falling = false;
 	
 	public boolean topCollision = false;
 	
 	public boolean isKicking = false;
+	public int kick = 0;
 	
 	public boolean doubleJumpReady = false;
 	
@@ -29,8 +30,8 @@ public class Player extends Entity {
 	
 	public int movementSpeed = 3;
 	
-	public BufferedImage kennen;
-	public BufferedImage kennen_kick;
+	public BufferedImage img;
+	public BufferedImage img_kick;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -40,9 +41,9 @@ public class Player extends Entity {
 	@Override
 	public void render(Graphics g) {
 		if(isKicking){
-			g.drawImage(kennen_kick, x, y, width+5, height, null);
+			g.drawImage(img_kick, x, y, width+12, height, null);
 		}else{
-			g.drawImage(kennen, x, y, width, height, null);
+			g.drawImage(img, x, y, width, height, null);
 		}
 	}
 
@@ -71,6 +72,14 @@ public class Player extends Entity {
 			
 			if(currentFallSpeed < maxFallSpeed){
 				currentFallSpeed += .15;
+			}
+		}
+		
+		if(isKicking){
+			kick--;
+			if(kick <= 0){
+				kick = 0;
+				isKicking = false;
 			}
 		}
 		detectCollision();
@@ -129,14 +138,14 @@ public class Player extends Entity {
 		}
 	}
 	
-	public void loadTextures(){
-		try {
-			kennen = ImageIO.read(new File("res/Kennen.png"));
-			kennen_kick = ImageIO.read(new File("res/kennen_kick.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
+	public void kick(){
+		if(!isKicking){
+			kick = 10;
+			isKicking = true;
 		}
 	}
+	
+	public abstract void loadTextures();
 
 	
 }
