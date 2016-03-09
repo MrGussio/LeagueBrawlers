@@ -51,6 +51,9 @@ public class Window extends JFrame implements KeyListener{
 				screen.p.jumpPressed = true;
 			}
 		}
+		if(e.getKeyCode() == KeyEvent.VK_X){
+			screen.p.kick();
+		}
 	}
 
 	@Override
