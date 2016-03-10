@@ -2,7 +2,11 @@ package nl.gussio.lb;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import nl.gussio.lb.entities.EntityManager;
@@ -24,7 +28,13 @@ public class Screen extends JPanel implements Runnable{
 	public static Map map;
 	public Player p;
 	
+	public BufferedImage bg;
 	public Screen(){
+		try {
+			bg = ImageIO.read(new File("res/background.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		setBackground(Color.BLACK);
 		em = new EntityManager();
 		map = new Map();
@@ -38,6 +48,7 @@ public class Screen extends JPanel implements Runnable{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		g.drawImage(bg, 0, 0, 1280, 720, null);
 		em.updateEntities();
 		em.renderEntities(g);
 		map.updateObjects();
