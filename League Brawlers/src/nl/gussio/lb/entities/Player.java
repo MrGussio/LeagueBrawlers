@@ -40,6 +40,7 @@ public abstract class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
+
 		if(isKicking){
 			g.drawImage(img_kick, x, y, width+12, height, null);
 		}else{
@@ -95,7 +96,7 @@ public abstract class Player extends Entity {
 					|| collides(new Point(iX +width - 1, iY), o)){
 				jumping = false;
 				falling = true;
-			}
+			} 
 			
 			//bottom
 			if(collides(new Point(iX + 2, iY+height + 1), o)
